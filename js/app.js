@@ -91,6 +91,24 @@ function getCostFromLabel(checkedCheckbox) {
   return checkedCheckbox.closest("label").text().split("$")[1];
 }
 
+// show the proper section depending on the selected payment method, and hide the others
+$("#payment").on("change", function() {
+  if ($(this).val() === "credit card") {
+    show($(".credit-card"));
+    hide($(".paypal"));
+    hide($(".bitcoin"));
+    $("#cc-num").focus();
+  } else if ($(this).val() === "paypal") {
+    hide($(".credit-card"));
+    show($(".paypal"));
+    hide($(".bitcoin"));
+  } else if ($(this).val() === "bitcoin") {
+    hide($(".credit-card"));
+    hide($(".paypal"));
+    show($(".bitcoin"));
+  }
+});
+
 function hide(element) {
   element.addClass("is-hidden");
 }
