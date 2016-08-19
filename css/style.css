@@ -113,6 +113,10 @@ button:hover {
 	background: #184c62;
 }
 
+.disabled {
+	color: gray;
+}
+
 /* ================================= 
   Page Styles
 ==================================== */
