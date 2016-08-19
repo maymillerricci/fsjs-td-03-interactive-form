@@ -4,9 +4,10 @@ $("#name").focus();
 // if select "other" job role, show text field to specify
 $("#title").on("change", function() {
   if ($(this).val() === "other") {
-    $("#other-title").removeClass("is-hidden").focus();
+    show($("#other-title"));
+    $("#other-title").focus();
   } else {
-    $("#other-title").addClass("is-hidden");
+    hide($("#other-title"));
   }
 });
 
@@ -16,16 +17,16 @@ $("#design").on("change", function() {
   var heartOptions = $("#color option:contains(I)");
   
   if ($(this).val() === "js puns") {
-    punsOptions.removeClass("is-hidden");
-    heartOptions.addClass("is-hidden");
+    show(punsOptions);
+    hide(heartOptions);
     selectFirstOfThemeIfHidden("cornflowerblue");
   } else if ($(this).val() === "heart js") {
-    heartOptions.removeClass("is-hidden");
-    punsOptions.addClass("is-hidden");
+    show(heartOptions);
+    hide(punsOptions);
     selectFirstOfThemeIfHidden("tomato");
   } else {
-    heartOptions.removeClass("is-hidden");
-    punsOptions.removeClass("is-hidden");
+    show(heartOptions);
+    show(punsOptions);
   }
 });
 
@@ -62,7 +63,7 @@ function disableSameTimeActivities(checkedCheckbox) {
 
 // display total cost of all activities, if any activities are checked
 function displayTotalCost(checkedCheckbox) {
-  $(".total-cost").removeClass("is-hidden");
+  show($(".total-cost"));
   
   var initialTotalCost = parseInt($(".total-cost span").text());
   var costForActivity = parseInt(getCostFromLabel(checkedCheckbox));
@@ -76,7 +77,7 @@ function displayTotalCost(checkedCheckbox) {
   $(".total-cost span").text(newTotalCost);
 
   if (newTotalCost === 0) {
-    $(".total-cost").addClass("is-hidden");
+    hide($(".total-cost"));
   }
 }
 
@@ -88,4 +89,12 @@ function getTimeSlotFromLabel(checkedCheckbox) {
 // pull out cost for activity from full activity label
 function getCostFromLabel(checkedCheckbox) {
   return checkedCheckbox.closest("label").text().split("$")[1];
+}
+
+function hide(element) {
+  element.addClass("is-hidden");
+}
+
+function show(element) {
+  element.removeClass("is-hidden");
 }
