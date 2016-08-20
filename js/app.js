@@ -109,6 +109,95 @@ $("#payment").on("change", function() {
   }
 });
 
+// on click to submit form, validate form and show error messages, and only submit if all valid
+$("form button").on("click", function(event) {
+  event.preventDefault();
+  if (validateForm()) {
+    $("form").submit();
+  } else {
+    $(window).scrollTop(50);
+    $("form").prepend("<h3 class='error error-instruction'>Please review the fields in red below.</h3>")
+  }
+});
+
+// clear out validation error messages from prior attempt to submit,
+// and validate each field displaying error messages as needed,
+// return true or false depending if all fields are valid
+function validateForm() {
+  $("label").removeClass("error");
+  $("legend").removeClass("error");
+  $(".error-instruction").remove();
+  var validName = validateField(isValidName(), $("#name").prev("label"), " (please provide your name)");
+  var validEmail = validateField(isValidEmail(), $("#mail").prev("label"), " (please provide a valid email address)");
+  var validActivities = validateField(isValidActivities(), $(".activities legend"), " (please select at least one activity)");
+  var validCreditCard = validateCreditCard();
+  return validName && validEmail && validActivities && validCreditCard;
+}
+
+// if credit card payment option is selected, validate credit card number, zip code, and CVV,
+// return true if all valid, or if credit card not selected as payment option,
+// return false if any of those fields are not valid and display error message on credit card section 
+function validateCreditCard() {
+  var validCreditCard;
+  if ($("#payment").val() === "credit card") {
+    var validCcNumber = validateField(isValidCcNumber(), $("#cc-num").prev("label"), "");
+    var validCcZip = validateField(isValidCcZip(), $("#zip").prev("label"), "");
+    var validCcCvv = validateField(isValidCcCvv(), $("#cvv").prev("label"), "");
+    validCreditCard = validCcNumber && validCcZip && validCcCvv;
+    if (!validCreditCard) {
+      $("#credit-card").prepend("<p class='error error-instruction'>Please enter valid credit card information.</p>")
+    }
+  } else {
+    validCreditCard = true;
+  }
+  return validCreditCard;
+}
+
+// validate a field by getting true/false from passed in function,
+// return true if valid, return false if not and display passed in error instruction on passed in label field
+function validateField(validator, label, errorMessage) {
+  if (validator) {
+    return true;
+  } else {
+    label.addClass("error").append("<span class='error-instruction'>" + errorMessage + "</span>");
+    return false;
+  }
+}
+
+// name cannot be empty
+function isValidName() {
+  return $("#name").val().length > 0;
+}
+
+// email address must be in valid format, matching email regular expression
+function isValidEmail() {
+  var emailRegEx = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+  return $("#mail").val().match(emailRegEx);
+}
+
+// at least one activity must be checked off
+function isValidActivities() {
+  return $(".activities input:checked").length > 0;
+}
+
+// credit card must be 13-19 digits
+function isValidCcNumber() {
+  var ccRegEx = /^\d{13,19}$/;
+  return $("#cc-num").val().match(ccRegEx);
+}
+
+// zip code must be 5 digits
+function isValidCcZip() {
+  var zipCodeRegEx = /^\d{5}$/;
+  return $("#zip").val().match(zipCodeRegEx);
+}
+
+// CVV must be 3-4 digits
+function isValidCcCvv() {
+  var cvvRegEx = /^\d{3,4}$/;
+  return $("#cvv").val().match(cvvRegEx);
+}
+
 function hide(element) {
   element.addClass("is-hidden");
 }

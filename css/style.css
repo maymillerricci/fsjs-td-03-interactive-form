@@ -117,6 +117,10 @@ button:hover {
 	color: gray;
 }
 
+.error {
+	color: darkred;
+}
+
 /* ================================= 
   Page Styles
 ==================================== */
