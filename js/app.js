@@ -180,10 +180,10 @@ function isValidActivities() {
   return $(".activities input:checked").length > 0;
 }
 
-// credit card must be 13-19 digits
+// credit card number must be valid based on Luhn algorithm
 function isValidCcNumber() {
-  var ccRegEx = /^\d{13,19}$/;
-  return $("#cc-num").val().match(ccRegEx);
+  var ccNumber = $("#cc-num").val();
+  return validateLuhn(ccNumber);
 }
 
 // zip code must be 5 digits
@@ -204,4 +204,39 @@ function hide(element) {
 
 function show(element) {
   element.removeClass("is-hidden");
+}
+
+// check if number is valid based on Luhn algorithm
+function validateLuhn(number) {
+  var length = number.length;
+
+  if (length < 13 || length > 19) {
+    return false;
+  }
+
+  var sum = 0; 
+  var mul = 1; 
+  
+  for (var i = 0; i < length; i++) {
+    digit = number.substring(length - i - 1, length - i);
+    tproduct = parseInt(digit, 10) * mul;
+  
+    if (tproduct >= 10) {
+      sum += (tproduct % 10) + 1;
+    } else {
+      sum += tproduct;
+    }
+
+    if (mul === 1) {
+      mul++;
+    } else {
+      mul--;
+    }
+  }
+
+  if ((sum % 10) === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
