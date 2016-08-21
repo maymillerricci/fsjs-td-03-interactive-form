@@ -35,8 +35,6 @@ $("#design").on("change", function() {
     selectFirstOfThemeIfHidden("tomato");
   } else {
     hide($("#colors-js-puns"));
-    show(heartOptions);
-    show(punsOptions);
   }
 });
 
