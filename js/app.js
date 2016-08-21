@@ -11,20 +11,24 @@ $("#title").on("change", function() {
   }
 });
 
-// limit t-shirt color dropdown options to match options for theme
+// only show t-shirt color options once a theme is selected
+// and limit color dropdown options to match options for theme
 $("#design").on("change", function() {
   var punsOptions = $("#color option:contains(Puns)");
   var heartOptions = $("#color option:contains(I)");
   
   if ($(this).val() === "js puns") {
+    show($("#colors-js-puns"));
     show(punsOptions);
     hide(heartOptions);
     selectFirstOfThemeIfHidden("cornflowerblue");
   } else if ($(this).val() === "heart js") {
+    show($("#colors-js-puns"));
     show(heartOptions);
     hide(punsOptions);
     selectFirstOfThemeIfHidden("tomato");
   } else {
+    hide($("#colors-js-puns"));
     show(heartOptions);
     show(punsOptions);
   }
