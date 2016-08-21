@@ -120,7 +120,7 @@ $("form button").on("click", function(event) {
     $("form").submit();
   } else {
     $(window).scrollTop(50);
-    $("form").prepend("<h3 class='error error-instruction'>Please review the fields in red below.</h3>")
+    $("form").prepend("<h3 class='error error-instruction'>Please review the fields in red below.</h3>");
   }
 });
 
@@ -149,7 +149,7 @@ function validateCreditCard() {
     var validCcCvv = validateField(isValidCcCvv(), $("#cvv").prev("label"), "");
     validCreditCard = validCcNumber && validCcZip && validCcCvv;
     if (!validCreditCard) {
-      $("#credit-card").prepend("<p class='error error-instruction'>Please enter valid credit card information.</p>")
+      $("#credit-card").prepend("<p class='error error-instruction'>Please enter valid credit card information.</p>");
     }
   } else {
     validCreditCard = true;
@@ -222,8 +222,8 @@ function validateLuhn(number) {
   var mul = 1; 
   
   for (var i = 0; i < length; i++) {
-    digit = number.substring(length - i - 1, length - i);
-    tproduct = parseInt(digit, 10) * mul;
+    var digit = number.substring(length - i - 1, length - i);
+    var tproduct = parseInt(digit, 10) * mul;
   
     if (tproduct >= 10) {
       sum += (tproduct % 10) + 1;
