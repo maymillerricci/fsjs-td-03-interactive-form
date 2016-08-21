@@ -187,3 +187,22 @@ button:hover {
 		width: 49%;
 	}
 }
+
+/* -- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
+/* -- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
+select {
+  background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+  height: 29px;
+  overflow: hidden;
+  background-color: #4E839A;
+  color: #F4FFFF;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 2px 50px 2px 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 8px;
+}
