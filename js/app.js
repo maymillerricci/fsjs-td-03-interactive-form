@@ -1,6 +1,12 @@
 // focus on first text field on page load
 $("#name").focus();
 
+// hide some parts of the form initially
+hide($("#other-title"));
+hide($("#colors-js-puns"));
+hide($(".paypal"));
+hide($(".bitcoin"));
+
 // if select "other" job role, show text field to specify
 $("#title").on("change", function() {
   if ($(this).val() === "other") {
